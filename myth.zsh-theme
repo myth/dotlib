@@ -55,7 +55,7 @@ local PR_RC="%(?..%{$fg[red]%}%? ↵${reset})"
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
-zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}%{$limegreen%}✔"
+zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
 zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
@@ -93,6 +93,6 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
-PROMPT=$'%{$orange%}%n%{$limegreen%}%{$darkgray%}❰%{$limegreen%}%m${darkgray%}❱${reset}:%{$gray%}%~${reset} $vcs_info_msg_0_$(virtualenv_info)${reset}
+PROMPT=$'%{$orange%}%n%{$limegreen%}%{$darkgray%}❰%{$limegreen%}%m${darkgray%}❱%{$gray%}%~${reset} $vcs_info_msg_0_$(virtualenv_info)${reset}
 $ '
 RPS1="${PR_RC}"
