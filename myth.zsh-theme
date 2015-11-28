@@ -10,37 +10,28 @@
 # return code from bira (oh-my-zsh standard theme package)
 
 export VIRTUAL_ENV_DISABLE_PROMPT=1
-
 function virtualenv_info {
-    [ $VIRTUAL_ENV ] && echo '('%F{blue}`basename $VIRTUAL_ENV`%f') '
+    [ $VIRTUAL_ENV ] && echo %F{240}'['%F{128}`basename $VIRTUAL_ENV`%F{240}']'%f
 }
 PR_GIT_UPDATE=1
-
 setopt prompt_subst
-
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
 
-#use extended color pallete if available
-if [[ $terminfo[colors] -ge 256 ]]; then
-    turquoise="%F{81}"
-    orange="%F{166}"
-    purple="%F{135}"
-    hotpink="%F{161}"
-    limegreen="%F{118}"
-else
-    turquoise="%F{cyan}"
-    orange="%F{yellow}"
-    purple="%F{magenta}"
-    hotpink="%F{red}"
-    limegreen="%F{green}"
-fi
+# Set up color vars
+darkergray="%F{235}"
+darkgray="%F{240}"
+gray="%F{250}"
+lightgray="%F{255}"
+lightblue="%F{117}"
+orange="%F{202}"
+purple="%F{magenta}"
+hotpink="%F{red}"
+limegreen="%F{118}"
+reset="%f"
 
 # enable VCS systems you use
 zstyle ':vcs_info:*' enable git svn
-
-# set up return code
-local return_code="%(?..%{$fg[red]%}%? ↵%{$reset_color%})"
 
 # check-for-changes can be really slow.
 # you should disable it, if you work with large repositories
@@ -53,17 +44,19 @@ zstyle ':vcs_info:*:prompt:*' check-for-changes true
 # %a - action (e.g. rebase-i)
 # %R - repository path
 # %S - path in the repository
-PR_RST="%f"
-FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
-FMT_ACTION="(%{$limegreen%}%a${PR_RST})"
-FMT_UNSTAGED="%{$orange%}!"
-FMT_STAGED="%{$limegreen%}+"
+FMT_BRANCH="(%{$lightblue%}%b%u%c${reset})"
+FMT_ACTION="(%{$limegreen%}%a${reset})"
+FMT_UNSTAGED="%{$orange%}✻"
+FMT_STAGED="%{$limegreen%}⬆"
+
+#set up return code
+local PR_RC="%(?..%{$fg[red]%}%? ↵${reset})"
 
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
 zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
-zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
+zstyle ':vcs_info:*:prompt:*' nvcsformats   "%{$limegreen%}✔"
 
 
 function steeef_preexec {
@@ -88,9 +81,9 @@ function steeef_precmd {
         # check for untracked files or updated submodules, since vcs_info doesn't
         if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
             PR_GIT_UPDATE=1
-            FMT_BRANCH="(%{$turquoise%}%b%u%c%{$hotpink%}●${PR_RST})"
+            FMT_BRANCH="%{$lightblue%}%b%u%c%{$hotpink%}⚑$reset"
         else
-            FMT_BRANCH="(%{$turquoise%}%b%u%c${PR_RST})"
+            FMT_BRANCH="%{$lightblue%}%b%u%c"
         fi
         zstyle ':vcs_info:*:prompt:*' formats "${FMT_BRANCH} "
 
@@ -100,6 +93,6 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
-PROMPT=$'%{$purple%}%n${PR_RST} %{$limegreen%}»${PR_RST} %{$orange%}%m${PR_RST}:%{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)
+PROMPT=$'%{$orange%}%n%{$limegreen%}%{$darkgray%}❰%{$limegreen%}%m${darkgray%}❱${reset}:%{$gray%}%~${reset} $vcs_info_msg_0_$(virtualenv_info)${reset}
 $ '
-RPS1="${return_code}"
+RPS1="${PR_RC}"
