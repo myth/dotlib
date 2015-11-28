@@ -55,8 +55,8 @@ local PR_RC="%(?..%{$fg[red]%}%? ↵${reset})"
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
 zstyle ':vcs_info:*:prompt:*' stagedstr     "${FMT_STAGED}"
 zstyle ':vcs_info:*:prompt:*' actionformats "${FMT_BRANCH}${FMT_ACTION}"
-zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}"
-zstyle ':vcs_info:*:prompt:*' nvcsformats   "%{$limegreen%}✔"
+zstyle ':vcs_info:*:prompt:*' formats       "${FMT_BRANCH}%{$limegreen%}✔"
+zstyle ':vcs_info:*:prompt:*' nvcsformats   ""
 
 
 function steeef_preexec {
