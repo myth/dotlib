@@ -1,5 +1,5 @@
 # Path to your oh-my-zsh configuration.
-ZSH=/home/myth/.oh-my-zsh
+ZSH=~/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
@@ -53,7 +53,10 @@ source $ZSH/oh-my-zsh.sh
 
 export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
 export WORKON_HOME=~/.environments
-source /usr/local/bin/virtualenvwrapper.sh
+export VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
+if [ -e VENV_WRAPPER ]; then
+    source $VENV_WRAPPER;
+fi
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
