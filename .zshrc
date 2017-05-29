@@ -62,11 +62,11 @@ fi
 
 # Load custom aliases and environment variables
 ALIASES=~/.profile.d/aliases
-DEFAULT_ENV=~/.profile.d/default
-if [ -e ALIASES ]; then
+if [ -f $ALIASES ]; then
     source $ALIASES;
 fi
-if [ -e DEFAULT_ENV ]; then
+DEFAULT_ENV=~/.profile.d/default
+if [ -f $DEFAULT_ENV ]; then
     source $DEFAULT_ENV;
 fi
 
