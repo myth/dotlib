@@ -49,7 +49,7 @@ FMT_ACTION="(%{$limegreen%}%a${reset})"
 FMT_UNSTAGED="%{$orange%}✻"
 FMT_STAGED="%{$limegreen%}⬆"
 
-#set up return code
+# set up return code
 local PR_RC="%(?..%{$fg[red]%}%? ↵${reset})"
 
 zstyle ':vcs_info:*:prompt:*' unstagedstr   "${FMT_UNSTAGED}"
@@ -93,6 +93,6 @@ function steeef_precmd {
 }
 add-zsh-hook precmd steeef_precmd
 
-PROMPT=$'%{$orange%}%n%{$limegreen%}%{$darkgray%}❰%{$limegreen%}%m${darkgray%}❱%{$gray%}%~${reset} $vcs_info_msg_0_$(virtualenv_info)${reset}
+PROMPT=$'%{$orange%}%n%{$limegreen%}%{$darkgray%}|%{$limegreen%}%m${darkgray%} %{$gray%}%~${reset} $vcs_info_msg_0_$(virtualenv_info)${reset}
 $ '
 RPS1="${PR_RC}"
