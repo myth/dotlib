@@ -189,6 +189,7 @@ set wrap "Wrap lines
 
 call plug#begin()
 Plug 'tpope/vim-sensible'
+Plug 'rust-lang/rust.vim'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -417,7 +418,4 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
-
-" Plugins
-Plug 'rust-lang/rust.vim'
 
