@@ -183,6 +183,16 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+""""""""""""""""""""""""""""""
+" Vim-plug
+""""""""""""""""""""""""""""""
+
+call plug#begin()
+Plug 'tpope/vim-sensible'
+
+" On-demand loading
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+call plug#end()
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -407,3 +417,7 @@ function! <SID>BufcloseCloseIt()
      execute("bdelete! ".l:currentBufNum)
    endif
 endfunction
+
+" Plugins
+Plug 'rust-lang/rust.vim'
+
