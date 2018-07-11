@@ -184,18 +184,6 @@ set si "Smart indent
 set wrap "Wrap lines
 
 """"""""""""""""""""""""""""""
-" Vim-plug
-""""""""""""""""""""""""""""""
-
-call plug#begin()
-Plug 'tpope/vim-sensible'
-Plug 'rust-lang/rust.vim'
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-call plug#end()
-
-""""""""""""""""""""""""""""""
 " => Visual mode related
 """"""""""""""""""""""""""""""
 " Visual mode pressing * or # searches for the current selection
