@@ -10,4 +10,5 @@ wget -O ~/.oh-my-zsh/themes/myth.zsh-theme -q "$THEME"
 
 mkdir -p ~/.profile.d
 
-
+touch ~/.profile.d/aliases
+touch ~/.profile.d/default

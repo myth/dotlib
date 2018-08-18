@@ -55,10 +55,6 @@ export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/ga
 export WORKON_HOME=~/.environments
 export GOPATH=~/.go
 export PATH=$PATH:$GOPATH/bin
-export VENV_WRAPPER=/usr/local/bin/virtualenvwrapper.sh
-if [ -e VENV_WRAPPER ]; then
-    source $VENV_WRAPPER;
-fi
 
 # Load custom aliases and environment variables
 ALIASES=~/.profile.d/aliases
