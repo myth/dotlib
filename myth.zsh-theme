@@ -52,16 +52,16 @@ fgc() {
 }
 
 # Set the backgroud color.
-# Calling bgcolor without an argument resets to terminal default.
-# Usage: "bgcolor black"
-bgcolor() {
+# Calling bgc without an argument resets to terminal default.
+# Usage: "bgc black"
+bgc() {
 	local bg
 	[[ -n $2 ]] && bg="%K{$1}" || bg="%k"
 	echo -n "%{$bg%}"
 }
 
 # Reset the background and foreground colors
-nocolor() {
+noc() {
 	echo -n "%{%k%}%{%f%}"
 }
 
