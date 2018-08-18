@@ -13,12 +13,11 @@
 # Variables and flags
 #
 
-FMT_ENABLE_CLOCK=1
-FMT_PROMPT_SYMBOL="❯"
-FMT_CONTEXT_SEPARATOR="|"
-FMT_VCS_STAGED_SYMBOL="●"
-FMT_VCS_UNSTAGED_SYMBOL="●"
-FMT_VCS_UNTRACKED_SYMBOL="●"
+MYTH_FMT_PROMPT_SYMBOL="❯"
+MYTH_FMT_CONTEXT_SEPARATOR="|"
+MYTH_FMT_VCS_STAGED_SYMBOL="●"
+MYTH_FMT_VCS_UNSTAGED_SYMBOL="●"
+MYTH_FMT_VCS_UNTRACKED_SYMBOL="●"
 
 autoload -U add-zsh-hook
 autoload -Uz vcs_info
@@ -77,24 +76,24 @@ nocolor() {
 # %S - path in the repositpry
 
 # Flag to enable/disable forced run of vcs_info (used for performance increase)
-FORCE_RUN_VCS_INFO=1
+MYTH_FORCE_RUN_VCS_INFO=1
 
 # Enable git vcs_info and check for repo changes
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git:prompt:*' check-for-changes true
 
 # Formatting
-FMT_GIT_BRANCH="$(fgc $lightblue)%b"
-FMT_GIT_STAGED="$(fgc green)$FMT_VCS_STAGED_SYMBOL"
-FMT_GIT_UNSTAGED="$(fgc yellow)$FMT_VCS_UNSTAGED_SYMBOL"
-FMT_GIT_UNTRACKED="$(fgc red)$FMT_VCS_UNTRACKED_SYMBOL"
-FMT_GIT_ACTION="$(fgc $darkgray)($(fgc $limegreen)%a$(fgc $darkgray))"
-FMT_GIT_FORMATS="$FMT_GIT_BRANCH%c%u"
-FMT_GIT_ACTIONFORMATS="$FMT_GIT_FORMATS $FMT_GIT_ACTION"
+MYTH_FMT_GIT_BRANCH="$(fgc $lightblue)%b"
+MYTH_FMT_GIT_STAGED="$(fgc $limegreen)$MYTH_FMT_VCS_STAGED_SYMBOL"
+MYTH_FMT_GIT_UNSTAGED="$(fgc $orange)$MYTH_FMT_VCS_UNSTAGED_SYMBOL"
+MYTH_FMT_GIT_UNTRACKED="$(fgc red)$MYTH_FMT_VCS_UNTRACKED_SYMBOL"
+MYTH_FMT_GIT_ACTION="$(fgc $darkgray)($(fgc $limegreen)%a$(fgc $darkgray))"
+MYTH_FMT_GIT_FORMATS="$MYTH_FMT_GIT_BRANCH%c%u"
+MYTH_FMT_GIT_ACTIONFORMATS="$MYTH_FMT_GIT_FORMATS $MYTH_FMT_GIT_ACTION"
 
 # Set the different format strings for the git prompt
-zstyle ':vcs_info:git:prompt:*' stagedstr "$FMT_GIT_STAGED"
-zstyle ':vcs_info:git:prompt:*' unstagedstr "$FMT_GIT_UNSTAGED"
+zstyle ':vcs_info:git:prompt:*' stagedstr "$MYTH_FMT_GIT_STAGED"
+zstyle ':vcs_info:git:prompt:*' unstagedstr "$MYTH_FMT_GIT_UNSTAGED"
 zstyle ':vcs_info:git:prompt:*' nvcsformats ""
 
 # Set force run vcs_info if "git" or "g" has been typed,
@@ -102,7 +101,7 @@ zstyle ':vcs_info:git:prompt:*' nvcsformats ""
 git_preexec() {
     case "$1" in
         g*)
-            FORCE_RUN_VCS_INFO=1
+            MYTH_FORCE_RUN_VCS_INFO=1
             ;;
     esac
 }
@@ -110,28 +109,28 @@ add-zsh-hook preexec git_preexec
 
 # Set force run vcs_info everytime user changed directory
 git_chpwd() {
-    FORCE_RUN_VCS_INFO=1
+    MYTH_FORCE_RUN_VCS_INFO=1
 }
 add-zsh-hook chpwd git_chpwd
 
 # For every command entered, check if we are going to update vcs_info
 git_precmd() {
-    if [[ -n "$FORCE_RUN_VCS_INFO" ]]; then
+    if [[ -n "$MYTH_FORCE_RUN_VCS_INFO" ]]; then
         # Check for untracked files or updated submodules, since vcs_info doesn't
         if git ls-files --other --exclude-standard 2> /dev/null | grep -q "."; then
-            FORCE_RUN_VCS_INFO=1
+            MYTH_FORCE_RUN_VCS_INFO=1
             # Append the untracked marker to the standard format
-            FMT_GIT="$FMT_GIT_FORMATS$FMT_GIT_UNTRACKED"
+            MYTH_FMT_GIT="$MYTH_FMT_GIT_FORMATS$MYTH_FMT_GIT_UNTRACKED"
         else
-            FMT_GIT="$FMT_GIT_FORMATS"
+            MYTH_FMT_GIT="$MYTH_FMT_GIT_FORMATS"
         fi
         
-        zstyle ':vcs_info:git:prompt:*' formats         " $FMT_GIT"
-        zstyle ':vcs_info:git:prompt:*' actionformats   " $FMT_GIT $FMT_GIT_ACTION"
+        zstyle ':vcs_info:git:prompt:*' formats         " $MYTH_FMT_GIT"
+        zstyle ':vcs_info:git:prompt:*' actionformats   " $MYTH_FMT_GIT $MYTH_FMT_GIT_ACTION"
 
         vcs_info 'prompt'
 
-        FORCE_RUN_VCS_INFO=
+        MYTH_FORCE_RUN_VCS_INFO=
     fi
 }
 add-zsh-hook precmd git_precmd
@@ -145,7 +144,7 @@ pc_context() {
     local user host
     user="$(fgc $orange)%n"
     host="$(fgc $limegreen)%m"
-    echo -n "$user$(fgc $darkergray)$FMT_CONTEXT_SEPARATOR$host$(fgc)"
+    echo -n "$user$(fgc $darkergray)$MYTH_FMT_CONTEXT_SEPARATOR$host$(fgc)"
 }
 
 # A component that displays the current working directory
@@ -175,16 +174,16 @@ pc_retcode() {
 
 # A component that pushes the prompt symbol and input to the next line
 pc_symbol() {
-    if [[ $RETCODE -ne 0 ]]; then
-        echo -n "\n$(fgc red)$FMT_PROMPT_SYMBOL$(fgc) "
+    if [[ $MYTH_RETCODE -ne 0 ]]; then
+        echo -n "\n$(fgc red)$MYTH_FMT_PROMPT_SYMBOL$(fgc) "
     else
-        echo -n "\n$(fgc $darkergray)$FMT_PROMPT_SYMBOL$(fgc) "
+        echo -n "\n$(fgc $darkergray)$MYTH_FMT_PROMPT_SYMBOL$(fgc) "
     fi
 }
 
 # A component that renders the current timestamp
 pc_timestamp() {
-    if [[ $FMT_ENABLE_CLOCK -eq 1 ]]; then
+    if [[ $MYTH_FMT_DISABLE_CLOCK -ne 1 ]]; then
         echo -n "$(fgc $darkgray)[$(fgc $grayer)%*$(fgc $darkgray)]$(fgc)"
     fi
 }
@@ -192,7 +191,7 @@ pc_timestamp() {
 # Build the main prompt
 build_prompt() {
     # Cache the last return code so we don't interfere with it
-    RETCODE=$?
+    MYTH_RETCODE=$?
 
     # Reset bold, foreground and background color
     echo -n "%f%k%b"
