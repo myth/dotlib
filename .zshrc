@@ -51,10 +51,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
-export WORKON_HOME=~/.environments
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 export GOPATH=~/.go
-export PATH=$PATH:$GOPATH/bin
+export PATH=$GOPATH/bin:~/.cargo/bin:$PATH
 
 # Load custom aliases and environment variables
 ALIASES=~/.profile.d/aliases
