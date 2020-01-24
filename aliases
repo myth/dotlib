@@ -1,0 +1,17 @@
+# General
+alias upgrade='sudo apt update && sudo apt dist-upgrade && sudo apt autoremove -y'
+alias upgrade-ulv='ansible-playbook -i ~/git/playbooks/ulv ~/git/playbooks/plays/upgrade.yml'
+alias gs='git status'
+
+# Utility
+alias brightness='xrandr --output eDP-1 --brightness'
+alias dark='xrandr --output eDP-1 --brightness 0.25'
+alias light='xrandr --output eDP-1 --brightness 0.8'
+
+tldr() {
+    curl "cht.sh/$1"
+}
+
+myip() {
+    echo "$(curl -s 'https://api.ipify.org')"
+}
